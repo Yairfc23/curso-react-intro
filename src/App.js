@@ -9,9 +9,9 @@ const defaultTodos = [
   {text: 'Cortar cebolla', completed: true },
   {text: 'Tomar el curso de React', completed: true },
   {text: 'Llorar con la llorona', completed: true },
-  {text: 'Llorar con la llorona', completed: true },
   {text: 'Cenar', completed: false },
-  {text: 'Hacer ejercicio', completed: true }
+  {text: 'Hacer ejercicio', completed: true },
+  {text: 'CORRER 10 METROS', completed: false }
 ];
 
 function App() {
@@ -21,19 +21,30 @@ function App() {
   const completedTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length;
 
+  const searchedTodos = todos.filter(
+    (todo) => {
+      const todotext = todo.text.toLowerCase();
+      const searchText = searchValue.toLowerCase();
+        return todotext.includes(searchText);
+    }
+  );
+
   console.log('Los usuarios buscan TODOs de ' + searchValue);
 
   return (
     <React.Fragment>
 
-      <TodoCounter completed={completedTodos} total={totalTodos} />
+      <TodoCounter
+        completed={completedTodos}
+        total={totalTodos} 
+      />
       <TodoSearch
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
       
       <TodoList>
-        {defaultTodos.map(todo => (
+        {searchedTodos.map(todo => (
           <TodoItem
             key= {todo.text}
             text={todo.text}
